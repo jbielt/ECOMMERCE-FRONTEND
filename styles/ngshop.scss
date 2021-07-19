@@ -1,0 +1,17 @@
+//Base
+@import "./base/colors";
+@import "./base/fonts";
+@import "./base/mixins";
+@import "./base/configuration";
+
+//Pages
+@import "./apps/shop/pages/home-page";
+@import "./apps/shop/pages/products-list-page";
+
+//Shared (file scss created on ui folder (libs styles)
+@import "./libs/ui/ui";
+
+
+
+
+
