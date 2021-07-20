@@ -9,11 +9,12 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+
         "@angular-eslint/directive-selector": [
           "error",
           {
             "type": "attribute",
-            "prefix": "eastblue",
+            "prefix": "admin",
             "style": "camelCase"
           }
         ],
@@ -21,7 +22,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "eastblue",
+            "prefix": "admin",
             "style": "kebab-case"
           }
         ]

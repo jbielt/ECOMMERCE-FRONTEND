@@ -18,7 +18,12 @@
 @import "./apps/shop/pages/products-list-page";
 
 //Shared (file scss created on ui folder (libs styles)
-@import "./libs/ui/ui";
+@import "./apps/shop/shared/header";
+@import "./apps/shop/shared/footer";
+
+//Libs
+@import './libs/ui/ui';
+
 
 
 

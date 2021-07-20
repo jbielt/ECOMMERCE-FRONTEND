@@ -11,6 +11,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { UiModule } from "@eastblue/ui";
 import {AccordionModule} from 'primeng/accordion';
+import { DashboardComponent } from './apps/admin/src/app/pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -18,7 +19,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent, ProductListComponent, HeaderComponent, FooterComponent],
+  declarations: [AppComponent, HomePageComponent, ProductListComponent, HeaderComponent, FooterComponent, DashboardComponent],
   imports: [BrowserModule, BrowserAnimationsModule, RouterModule.forRoot(routes), UiModule, AccordionModule],
   providers: [],
   bootstrap: [AppComponent],
