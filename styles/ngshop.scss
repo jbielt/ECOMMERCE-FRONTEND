@@ -2,12 +2,16 @@
 @import "./base/colors";
 @import "./base/fonts";
 @import "./base/mixins";
-@import "./base/configuration";
 
 //Libraries
 @import '~primeicons/primeicons.css';
 @import "~primeng/resources/themes/saga-blue/theme.css";
 @import "~primeng/resources/primeng.min.css";
+//grid system primeng
+@import "~primeflex/primeflex.css";
+
+@import "./base/configuration";
+
 
 //Pages
 @import "./apps/shop/pages/home-page";
