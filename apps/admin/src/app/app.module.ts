@@ -14,13 +14,17 @@ import {ToolbarModule} from 'primeng/toolbar';
 import { ButtonModule } from "primeng/button";
 import {TableModule} from 'primeng/table';
 import {CategoriesService} from "@eastblue/products";
+import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
+import {InputTextModule} from 'primeng/inputtext';
+
 
 
 const UX_MODULE = [
   CardModule,
   ToolbarModule,
   ButtonModule,
-  TableModule
+  TableModule,
+  InputTextModule
 ]
 
 const routes: Routes = [
@@ -35,6 +39,10 @@ const routes: Routes = [
       {
         path: 'categories',
         component: CategoriesListComponent
+      },
+      {
+        path: 'categories/form',
+        component: CategoriesFormComponent
       }
     ]
   }
@@ -45,13 +53,14 @@ const routes: Routes = [
     DashboardComponent,
     ShellComponent,
     SidebarComponent,
-    CategoriesListComponent
+    CategoriesListComponent,
+    CategoriesFormComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, {initialNavigation: 'enabledBlocking'}),
     HttpClientModule,
-    ...UX_MODULE
+    UX_MODULE
   ],
   providers: [CategoriesService],
   bootstrap: [AppComponent],

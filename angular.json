@@ -18,7 +18,11 @@
             "tsConfig": "apps/admin/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["apps/admin/src/favicon.ico", "apps/admin/src/assets"],
-            "styles": ["apps/admin/src/styles.scss"],
+            "styles": ["apps/admin/src/styles.scss",
+              "./node_modules/primeng/resources/primeng.css",
+              "./node_modules/primeflex/primeflex.css"
+
+            ],
             "scripts": []
           },
           "configurations": {
