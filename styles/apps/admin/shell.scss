@@ -1,10 +1,9 @@
 .admin {
-  &-wrapper {
+  &-wrapper{
     height: 100%;
     padding: 0;
     margin: 0;
   }
-
   &-main {
     width: calc(100% - 175px);
     margin-left: 175px;
@@ -14,36 +13,42 @@
     width: 175px;
     background-color: black;
     height: 100%;
+    top: 0;
 
-    .logo {
+    .logo{
       padding: 20px;
       width: 100%;
+
       img {
         max-width: 100%;
       }
     }
     .links {
-      ul {
+      ul{
         margin: 0;
-        padding: 0;
-        li {
+
+        li{
           display: block;
           list-style: none;
           width: 100%;
-          a {
+
+          a{
             color: var(--surface-a);
-            padding: 10px 15px;
+            padding:10px;
             display: block;
             width: 100%;
-            font-family: 'Open Sans', sans-serif !important;
 
             &:hover {
               background-color: var(--blue-700);
             }
-            i {
+
+            i{
               margin-right: 8px;
               margin-top: 0;
-              float: left;
+            }
+
+            &.logout{
+              color: var(--blue-500);
             }
           }
         }
