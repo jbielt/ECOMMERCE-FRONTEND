@@ -26,6 +26,7 @@
     .links {
       ul{
         margin: 0;
+        padding: 0 !important;
 
         li{
           display: block;
@@ -43,8 +44,8 @@
             }
 
             i{
-              margin-right: 8px;
               margin-top: 0;
+              margin-left: 20px;
             }
 
             &.logout{
