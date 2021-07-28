@@ -8,7 +8,8 @@
             <p-button
               styleClass="p-button-primary mr-2"
               label="Create"
-              icon="pi pi-plus">
+              icon="pi pi-plus"
+              (click)="onSubmit()">
             </p-button>
             <p-button
               styleClass="p-button-secondary"
@@ -22,15 +23,17 @@
     </div>
     <div class="p-grid">
       <div class="p-col-12">
-        <form>
+        <form [formGroup]="form">
           <div class="row">
             <div class="col">
               <label for="name">Name</label>
-              <input id="name" type="text" class="form-control" aria-label="name">
+              <input formControlName="name" id="name" type="text" class="form-control" aria-label="name">
+              <small *ngIf="categoryForm.name.invalid && isSubmited" class="p-error">Name is required</small>
             </div>
             <div class="col">
               <label for="icon">Icon</label>
-              <input id="icon" type="text" class="form-control" aria-label="icon">
+              <input formControlName="icon" id="icon" type="text" class="form-control" aria-label="icon">
+              <small *ngIf="categoryForm.icon.invalid && isSubmited" class="p-error">Icon is required</small>
             </div>
           </div>
         </form>
