@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CategoriesService, Category} from "@eastblue/products";
 import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'admin-categories-list',
@@ -13,7 +14,8 @@ export class CategoriesListComponent implements OnInit {
 
   constructor(private categoriesService: CategoriesService,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService) { }
+              private confirmationService: ConfirmationService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this._getCategories();
@@ -23,6 +25,10 @@ export class CategoriesListComponent implements OnInit {
     this.categoriesService.getCategories().subscribe(cats => {
       this.categories = cats;
     });
+  }
+
+  updateCategory(categoryId: string) {
+    this.router.navigateByUrl(`categories/form/${categoryId}`)
   }
 
   deleteCategory(categoryId: string) {

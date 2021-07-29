@@ -4,6 +4,7 @@ import {CategoriesService, Category} from "@eastblue/products";
 import {MessageService} from "primeng/api";
 import {timer} from "rxjs";
 import { Location} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'admin-categories-form',
@@ -12,18 +13,23 @@ import { Location} from "@angular/common";
 export class CategoriesFormComponent implements OnInit {
 
   form: FormGroup;
-  isSubmited: boolean = false;
+  isSubmited = false;
+  editMode = false;
+  currentCategoryID: string;
 
   constructor(private messageService: MessageService,
               private formBuilder: FormBuilder,
               private categoriesService: CategoriesService,
-              private location: Location) { }
+              private location: Location,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       name:['', Validators.required],
       icon:['', Validators.required],
     });
+
+    this._checkEditMode();
   }
 
   onSubmit() {
@@ -32,27 +38,75 @@ export class CategoriesFormComponent implements OnInit {
       return;
     }
     const category: Category = {
+      id: this.currentCategoryID,
       name: this.categoryForm.name.value,
       icon: this.categoryForm.icon.value
+    };
+
+    if(this.editMode) {
+      this._updateCategory(category);
+    } else {
+      this._addCategory(category);
     }
+
+  }
+
+  private _updateCategory(category: Category) {
+    this.categoriesService.updateCategory(category).subscribe(response => {
+        this.messageService.add({
+          severity:'success',
+          summary:'Success',
+          detail:'Category is updated!'
+        });
+        // Al crear una category torna a la llista automaticament.
+        timer(2000).toPromise().then(done => {
+          this.location.back();
+        })
+      },
+      (error) => {
+        this.messageService.add({
+          severity:'error',
+          summary:'Error',
+          detail:'Category cannot be updated!'
+        });
+      }
+    );
+  }
+  private _addCategory(category: Category) {
     this.categoriesService.createCategory(category).subscribe(response => {
-      this.messageService.add({
-        severity:'success',
-        summary:'Success',
-        detail:'Category is created!'
-      });
-      // Al crear una category torna a la llista automaticament.
-      timer(2000).toPromise().then(done => {
-        this.location.back();
-      })
-    },
-  (error) => {
+        this.messageService.add({
+          severity:'success',
+          summary:'Success',
+          detail:'Category is created!'
+        });
+        // Al crear una category torna a la llista automaticament.
+        timer(2000).toPromise().then(done => {
+          this.location.back();
+        })
+      },
+      (error) => {
         this.messageService.add({
           severity:'error',
           summary:'Error',
           detail:'Category cannot be created!'
         });
-      });
+      }
+    );
+  }
+
+
+  // If there is id param, is edit mode true
+  private _checkEditMode() {
+    this.route.params.subscribe(params => {
+      if(params.id) {
+        this.editMode = true;
+        this.currentCategoryID = params.id;
+        this.categoriesService.getCategory(params.id).subscribe(category => {
+          this.categoryForm.name.setValue(category.name);
+          this.categoryForm.icon.setValue(category.icon);
+        });
+      }
+    });
   }
 
   get categoryForm() {
