@@ -19,7 +19,8 @@
       "@eastblue/orders": ["libs/orders/src/index.ts"],
       "@eastblue/products": ["libs/products/src/index.ts"],
       "@eastblue/ui": ["libs/ui/src/index.ts"],
-      "@eastblue/users": ["libs/users/src/index.ts"]
+      "@eastblue/users": ["libs/users/src/index.ts"],
+      "@env/*": ["environments/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

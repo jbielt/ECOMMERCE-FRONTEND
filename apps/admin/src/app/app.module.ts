@@ -10,14 +10,14 @@ import {RouterModule, Routes} from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard/dashboard.component';
 import { ShellComponent } from './shared/shell/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar/sidebar.component';
-import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
+import { CategoriesListComponent } from './pages/categories/categories-list/categories-list.component';
 
 import {CardModule} from 'primeng/card';
 import {ToolbarModule} from 'primeng/toolbar';
 import { ButtonModule } from "primeng/button";
 import {TableModule} from 'primeng/table';
 import {CategoriesService} from "@eastblue/products";
-import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
+import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 import {InputTextModule} from 'primeng/inputtext';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmationService, MessageService} from "primeng/api";

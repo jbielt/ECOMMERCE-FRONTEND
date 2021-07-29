@@ -118,4 +118,8 @@ export class CategoriesFormComponent implements OnInit {
     return this.form.controls;
   }
 
+  onCancel() {
+    this.location.back();
+  }
+
 }
