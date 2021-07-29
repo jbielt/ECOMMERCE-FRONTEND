@@ -19,8 +19,7 @@
         <p-table [value]="categories" styleClass="p-datatable-gridlines">
           <ng-template pTemplate="header">
             <tr>
-              <th>Id</th>
-              <th>Name</th>
+              <th pSortableColumn="name"><p-sortIcon field="name"></p-sortIcon>Name</th>
               <th>Icon</th>
               <th>Color</th>
               <th></th>
@@ -28,10 +27,15 @@
           </ng-template>
           <ng-template pTemplate="body" let-category>
             <tr>
-              <td>{{category.id}}</td>
               <td>{{category.name}}</td>
-              <td>{{category.icon}}</td>
-              <td>{{category.color}}</td>
+              <td><i style="font-size:2rem" class="pi" [ngClass]="'pi-' + category.icon"></i></td>
+              <td>
+                <i
+                  class="pi pi-circle-on"
+                  style="font-size: 2rem"
+                  [ngStyle]="{ color: category.color }">
+                </i>
+              </td>
               <td>
                 <p-button
                   (click)="deleteCategory(category.id)"
