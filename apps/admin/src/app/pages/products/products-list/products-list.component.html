@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <div class="admin-page">
-  <p-card header="Categories" subheader="List of all categories">
+  <p-card header="Products" subheader="List of all products">
     <div class="p-grid mb-2">
       <div class="p-col-12">
         <p-toolbar>
@@ -16,34 +16,34 @@
     </div>
     <div class="p-grid">
       <div class="p-col-12">
-        <p-table [value]="categories" styleClass="p-datatable-gridlines">
+        <p-table [value]="products" styleClass="p-datatable-gridlines">
           <ng-template pTemplate="header">
             <tr>
               <th pSortableColumn="name"><p-sortIcon field="name"></p-sortIcon>Name</th>
-              <th>Icon</th>
-              <th>Color</th>
+              <th>Image</th>
+              <th pSortableColumn="price"><p-sortIcon field="price"></p-sortIcon>Price</th>
+              <th pSortableColumn="stock"><p-sortIcon field="stock"></p-sortIcon>Stock</th>
+              <th pSortableColumn="category"><p-sortIcon field="category"></p-sortIcon>Category</th>
+              <th pSortableColumn="created"><p-sortIcon field="created"></p-sortIcon>Created at</th>
               <th></th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-category>
+          <ng-template pTemplate="body" let-product>
             <tr>
-              <td>{{category.name}}</td>
-              <td><i style="font-size:2rem" class="pi" [ngClass]="'pi-' + category.icon"></i></td>
-              <td>
-                <i
-                  class="pi pi-circle-on"
-                  style="font-size: 2rem"
-                  [ngStyle]="{ color: category.color }">
-                </i>
-              </td>
+              <td>{{product.name}}</td>
+              <td>{{product.image}}</td>
+              <td>{{product.price}}</td>
+              <td>{{product.countInStock}}</td>
+              <td>{{product.category}}</td>
+              <td>{{product.dateCreated}}</td>
               <td>
                 <p-button
-                  (click)="deleteCategory(category.id)"
+                  (click)="deleteProduct(product.id)"
                   styleClass="p-button-danger mr-2"
                   icon="pi pi-trash">
                 </p-button>
                 <p-button
-                  (click)="updateCategory(category.id)"
+                  (click)="updateProduct(product.id)"
                   styleClass="p-button-success"
                   icon="pi pi-pencil">
                 </p-button>
@@ -56,4 +56,5 @@
   </p-card>
 </div>
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+
 
