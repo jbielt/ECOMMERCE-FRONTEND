@@ -28,7 +28,7 @@ export class CategoriesListComponent implements OnInit {
   }
 
   updateCategory(categoryId: string) {
-    this.router.navigateByUrl(`categories/form/${categoryId}`)
+    this.router.navigateByUrl(`categories/form/${categoryId}`);
   }
 
   deleteCategory(categoryId: string) {
@@ -37,7 +37,8 @@ export class CategoriesListComponent implements OnInit {
       header: 'Delete Category',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.categoriesService.deleteCategory(categoryId).subscribe(response => {
+        this.categoriesService.deleteCategory(categoryId).subscribe(
+      () => {
             this._getCategories();
             this.messageService.add({
               severity: 'success',
@@ -45,7 +46,7 @@ export class CategoriesListComponent implements OnInit {
               detail: 'Category is deleted!'
             });
           },
-          (error) => {
+      () => {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -53,16 +54,6 @@ export class CategoriesListComponent implements OnInit {
             });
           }
         );
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
-            break;
-        }
       }
     })
   }

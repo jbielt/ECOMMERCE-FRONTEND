@@ -54,18 +54,19 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   private _updateCategory(category: Category) {
-    this.categoriesService.updateCategory(category).subscribe(response => {
+    this.categoriesService.updateCategory(category).subscribe(
+  (category: Category) => {
         this.messageService.add({
           severity:'success',
           summary:'Success',
-          detail:'Category is updated!'
+          detail:`Category ${category} is updated!`
         });
         // Al crear una category torna a la llista automaticament.
-        timer(2000).toPromise().then(done => {
+        timer(2000).toPromise().then(() => {
           this.location.back();
         })
       },
-      (error) => {
+  () => {
         this.messageService.add({
           severity:'error',
           summary:'Error',
@@ -75,18 +76,19 @@ export class CategoriesFormComponent implements OnInit {
     );
   }
   private _addCategory(category: Category) {
-    this.categoriesService.createCategory(category).subscribe(response => {
+    this.categoriesService.createCategory(category).subscribe(
+  (category: Category) => {
         this.messageService.add({
           severity:'success',
           summary:'Success',
-          detail:'Category is created!'
+          detail:`Category ${category} created!`
         });
         // Al crear una category torna a la llista automaticament.
-        timer(2000).toPromise().then(done => {
+        timer(2000).toPromise().then(() => {
           this.location.back();
         })
       },
-      (error) => {
+  () => {
         this.messageService.add({
           severity:'error',
           summary:'Error',
