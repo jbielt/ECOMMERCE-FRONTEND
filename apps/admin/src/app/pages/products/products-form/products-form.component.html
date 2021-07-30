@@ -53,7 +53,7 @@
             </div>
             <div class="col-4">
               <label for="category">Category</label><br>
-              <!--
+              <!-- //bootstrap dropdown, p-dropdown no funciona del tot bé.
               <select class="form-select" formControlName="category">
                 <option selected>Choose a category</option>
                 <option *ngFor="let category of categories">{{category.name}}</option>
@@ -79,6 +79,13 @@
               <label for="description">Description</label>
               <textarea rows="7" cols="30" class="form-control" placeholder="Description of the product..."></textarea>
               <small *ngIf="productForm.description.invalid && isSubmitted" id="description" class="p-error">Description is required</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="richDescription">Product Details</label>
+              <p-editor id="richDescription" formControlName="richDescription" [style]="{'height':'320px'}"></p-editor>
+
             </div>
           </div>
 
