@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CategoriesService, Category} from "@eastblue/products";
 
 @Component({
   selector: 'admin-products-form',
@@ -10,11 +11,14 @@ export class ProductsFormComponent implements OnInit {
   editMode = false;
   form: FormGroup;
   isSubmitted = false;
+  categories: Category[]= [];
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private categoriesService: CategoriesService) { }
 
   ngOnInit(): void {
     this._initForm();
+    this._getCategories();
   }
 
   private _initForm() {
@@ -28,6 +32,12 @@ export class ProductsFormComponent implements OnInit {
       richDescription: [''],
       image: [''],
       isFeatured: [''],
+    })
+  }
+
+  private _getCategories() {
+    this.categoriesService.getCategories().subscribe(categories => {
+      this.categories = categories;
     })
   }
 

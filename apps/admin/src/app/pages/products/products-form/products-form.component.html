@@ -52,13 +52,21 @@
               <small *ngIf="productForm.countInStock.invalid && isSubmitted" class="p-error">countInStock is required</small>
             </div>
             <div class="col-4">
-              <label for="category">Category</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+              <label for="category">Category</label><br>
+              <!--
+              <select class="form-select" formControlName="category">
+                <option selected>Choose a category</option>
+                <option *ngFor="let category of categories">{{category.name}}</option>
               </select>
+              -->
+              <p-dropdown [style]="{'width':'100%', 'height':'60%'}"
+                [options]="categories"
+                formControlName="category"
+                optionLabel="name"
+                [filter]="true"
+                filterBy="name"
+                [showClear]="true"
+                placeholder="Select a Category"></p-dropdown>
               <small *ngIf="productForm.category.invalid && isSubmitted" id="category" class="p-error">category is required</small>
             </div>
             <div class="col-4">
