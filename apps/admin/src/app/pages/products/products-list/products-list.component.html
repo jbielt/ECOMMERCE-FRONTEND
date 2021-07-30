@@ -34,8 +34,8 @@
               <td>{{product.image}}</td>
               <td>{{product.price}}</td>
               <td>{{product.countInStock}}</td>
-              <td>{{product.category}}</td>
-              <td>{{product.dateCreated}}</td>
+              <td>{{product.category.name}}</td>
+              <td>{{product.dateCreated | date:'short'}}</td>
               <td>
                 <p-button
                   (click)="deleteProduct(product.id)"
