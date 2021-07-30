@@ -85,10 +85,17 @@
             <div class="col">
               <label for="richDescription">Product Details</label>
               <p-editor id="richDescription" formControlName="richDescription" [style]="{'height':'320px'}"></p-editor>
-
             </div>
           </div>
-
+          <div class="row">
+            <div class="col">
+              <label for="name">Main Image</label><br>
+              <input type="file" class="p-inputtext col-12" accept="image/*" (change)="onImageUpload($event)">
+              <div class="col-2 mt-2 pl-0">
+                <img style="width:100%" [src]="imageDisplay" alt="">
+              </div>
+            </div>
+          </div>
         </form>
       </div>
     </div>

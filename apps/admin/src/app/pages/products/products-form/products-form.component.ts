@@ -12,6 +12,7 @@ export class ProductsFormComponent implements OnInit {
   form: FormGroup;
   isSubmitted = false;
   categories: Category[]= [];
+  imageDisplay: string | ArrayBuffer | null;
 
   constructor(private formBuilder: FormBuilder,
               private categoriesService: CategoriesService) { }
@@ -45,12 +46,21 @@ export class ProductsFormComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
 
+  onSubmit() {
+  }
+  onCancel() {
   }
 
-  onCancel() {
-
+  onImageUpload(event: any) {
+    const file = event.target.files[0];
+    if(file) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        this.imageDisplay = fileReader.result;
+      }
+      fileReader.readAsDataURL(file);
+    }
   }
 
 }
