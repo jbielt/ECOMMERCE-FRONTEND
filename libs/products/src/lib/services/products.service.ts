@@ -9,27 +9,27 @@ import {Product} from "../..";
 })
 export class ProductsService {
 
-  apiURLCategories = environment.apiURL + 'products';
+  apiURLProducts = environment.apiURL + 'products';
 
   constructor(private http: HttpClient) {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiURLCategories)
+    return this.http.get<Product[]>(this.apiURLProducts)
   }
 
   getProduct(productId: string): Observable<Product> {
-    return this.http.get<Product>(`${this.apiURLCategories}/${productId}`)
+    return this.http.get<Product>(`${this.apiURLProducts}/${productId}`)
   }
 
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiURLCategories, product);
+  createProduct(productData: FormData): Observable<Product> {
+    return this.http.post<Product>(this.apiURLProducts, productData);
   }
 
   updateProduct(product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiURLCategories}/${product.id}`, product);
+    return this.http.put<Product>(`${this.apiURLProducts}/${product.id}`, product);
   }
   deleteProduct(productId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiURLCategories}/${productId}`);
+    return this.http.delete<any>(`${this.apiURLProducts}/${productId}`);
   }
 }

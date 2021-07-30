@@ -61,13 +61,14 @@
               -->
               <p-dropdown [style]="{'width':'100%', 'height':'60%'}"
                 [options]="categories"
+                optionValue="id"
                 formControlName="category"
                 optionLabel="name"
                 [filter]="true"
                 filterBy="name"
                 [showClear]="true"
                 placeholder="Select a Category"></p-dropdown>
-              <small *ngIf="productForm.category.invalid && isSubmitted" id="category" class="p-error">category is required</small>
+              <small *ngIf="productForm.category.invalid && isSubmitted" id="category" class="p-error">Category is required</small>
             </div>
             <div class="col-4">
               <label for="isFeatured">Is Featured</label><br>
@@ -77,8 +78,8 @@
           <div class="row">
             <div class="col">
               <label for="description">Description</label>
-              <textarea rows="7" cols="30" class="form-control" placeholder="Description of the product..."></textarea>
-              <small *ngIf="productForm.description.invalid && isSubmitted" id="description" class="p-error">Description is required</small>
+              <textarea id="description" rows="7" cols="30" class="form-control" placeholder="Description of the product..."></textarea>
+              <!--<small *ngIf="productForm.description.invalid && isSubmitted" id="description" class="p-error">Description is required</small>-->
             </div>
           </div>
           <div class="row">
@@ -90,7 +91,11 @@
           <div class="row">
             <div class="col">
               <label for="name">Main Image</label><br>
-              <input type="file" class="p-inputtext col-12" accept="image/*" (change)="onImageUpload($event)">
+              <input
+                type="file"
+                class="p-inputtext col-12"
+                accept="image/*"
+                (change)="onImageUpload($event)">
               <div class="col-2 mt-2 pl-0">
                 <img style="width:100%" [src]="imageDisplay" alt="">
               </div>
