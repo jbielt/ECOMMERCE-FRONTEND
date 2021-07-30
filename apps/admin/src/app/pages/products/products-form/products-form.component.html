@@ -1,1 +1,81 @@
-<p>products-form works!</p>
+<script src="../../../app.component.spec.ts"></script>
+<p-toast></p-toast>
+<div class="admin-page">
+  <p-card
+    [header]="editMode ? 'Edit Product' : 'Add Product'"
+    subheader="You can add or edit products here">
+    <div class="p-grid mb-5">
+      <div class="p-col-12">
+        <p-toolbar>
+          <div class="p-toolbar-group-left"></div>
+          <div class="p-toolbar-group-right">
+            <p-button
+              styleClass="p-button-primary mr-2"
+              [label]="editMode ? 'Update' : 'Create'"
+              icon="pi pi-plus"
+              (click)="onSubmit()">
+            </p-button>
+            <p-button
+              styleClass="p-button-secondary"
+              label="Cancel"
+              icon="pi pi-arrow-circle-left"
+              (click)="onCancel()">
+            </p-button>
+          </div>
+        </p-toolbar>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12">
+        <form [formGroup]="form">
+          <div class="row">
+            <div class="col">
+              <label for="name">Name</label>
+              <input formControlName="name" id="name" type="text" class="form-control" aria-label="name">
+              <small *ngIf="productForm.name.invalid && isSubmitted" class="p-error">Name is required</small>
+            </div>
+            <div class="col">
+              <label for="brand">Brand</label>
+              <input formControlName="brand" id="brand" type="text" class="form-control" aria-label="brand">
+              <small *ngIf="productForm.brand.invalid && isSubmitted" class="p-error">Brand is required</small>
+            </div>
+            <div class="col">
+              <label>Price</label><br>
+              <input formControlName="price" id="price" type="number" class="form-control" aria-label="price">
+              <small *ngIf="productForm.price.invalid && isSubmitted" class="p-error">Price is required</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <label for="countInStock">countInStock</label>
+              <input formControlName="countInStock" id="countInStock" type="text" class="form-control" aria-label="name">
+              <small *ngIf="productForm.countInStock.invalid && isSubmitted" class="p-error">countInStock is required</small>
+            </div>
+            <div class="col-4">
+              <label for="category">Category</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+              <small *ngIf="productForm.category.invalid && isSubmitted" id="category" class="p-error">category is required</small>
+            </div>
+            <div class="col-4">
+              <label for="isFeatured">Is Featured</label><br>
+              <p-inputSwitch id="isFeatured" formControlName="isFeatured"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="description">Description</label>
+              <textarea rows="7" cols="30" class="form-control" placeholder="Description of the product..."></textarea>
+              <small *ngIf="productForm.description.invalid && isSubmitted" id="description" class="p-error">Description is required</small>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </p-card>
+</div>

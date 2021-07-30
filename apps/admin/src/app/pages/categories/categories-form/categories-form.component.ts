@@ -13,7 +13,7 @@ import {ActivatedRoute} from "@angular/router";
 export class CategoriesFormComponent implements OnInit {
 
   form: FormGroup;
-  isSubmited = false;
+  isSubmitted = false;
   editMode = false;
   currentCategoryID: string;
 
@@ -34,7 +34,7 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isSubmited = true;
+    this.isSubmitted = true;
     if(this.form.invalid){
       return;
     }
