@@ -59,7 +59,7 @@ export class CategoriesFormComponent implements OnInit {
         this.messageService.add({
           severity:'success',
           summary:'Success',
-          detail:`Category ${category} is updated!`
+          detail:`Category ${category.name} is updated!`
         });
         // Al crear una category torna a la llista automaticament.
         timer(2000).toPromise().then(() => {
