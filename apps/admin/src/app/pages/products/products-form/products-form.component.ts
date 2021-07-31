@@ -55,12 +55,13 @@ export class ProductsFormComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitted = true;
-    if(this.form.invalid) return;
+    if(this.form.invalid) {
+      return;
+    }
     const productFormData = new FormData();
     Object.keys(this.productForm).map((key) => {
       productFormData.append(key, this.productForm[key].value);
     });
-
     this._addProduct(productFormData);
   }
 
