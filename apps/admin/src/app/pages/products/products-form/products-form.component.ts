@@ -1,30 +1,31 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CategoriesService, Category, Product, ProductsService} from "@eastblue/products";
-import {timer} from "rxjs";
-import {MessageService} from "primeng/api";
-import {Location} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import {CategoriesService, Category, Product, ProductsService} from '@eastblue/products';
+import { MessageService } from 'primeng/api';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'admin-products-form',
-  templateUrl: './products-form.component.html'
+  templateUrl: './products-form.component.html',
+  styles: []
 })
 export class ProductsFormComponent implements OnInit {
-
   editMode = false;
   form: FormGroup;
   isSubmitted = false;
-  categories: Category[]= [];
+  categories: Category[] = [];
   imageDisplay: string | ArrayBuffer;
-  currentProductID: string;
+  currentProductId: string;
 
   constructor(private formBuilder: FormBuilder,
-              private categoriesService: CategoriesService,
               private productsService: ProductsService,
+              private categoriesService: CategoriesService,
               private messageService: MessageService,
               private location: Location,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this._initForm();
@@ -42,102 +43,86 @@ export class ProductsFormComponent implements OnInit {
       description: ['', Validators.required],
       richDescription: [''],
       image: ['', Validators.required],
-      isFeatured: [false],
-    })
+      isFeatured: [false]
+    });
   }
 
   private _getCategories() {
-    this.categoriesService.getCategories().subscribe(categories => {
+    this.categoriesService.getCategories().subscribe((categories) => {
       this.categories = categories;
-    })
+    });
   }
-
-  get productForm() {
-    return this.form.controls;
-  }
-
 
   onSubmit() {
     this.isSubmitted = true;
-    if(this.form.invalid) {
-      return;
-    }
+    if (this.form.invalid) return;
+
     const productFormData = new FormData();
     Object.keys(this.productForm).map((key) => {
+      console.log(this.productForm[key].value)
       productFormData.append(key, this.productForm[key].value);
     });
-    if(this.editMode) {
+    if (this.editMode) {
       this._updateProduct(productFormData);
-    }else{
+    } else {
       this._addProduct(productFormData);
     }
   }
 
-   _addProduct(productData: FormData) {
-    console.log("addproduct?")
+  private _addProduct(productData: FormData) {
     this.productsService.createProduct(productData).subscribe(
       (product: Product) => {
         this.messageService.add({
-          severity:'success',
-          summary:'Success',
-          detail:`Product ${product.name} created!`
+          severity: 'success',
+          summary: 'Success',
+          detail: `Product ${product.name} is created!`
         });
-        timer(2000).toPromise().then(() => {
-          this.location.back();
-        })
+        timer(2000)
+          .toPromise()
+          .then(() => {
+            this.location.back();
+          });
       },
       () => {
         this.messageService.add({
-          severity:'error',
-          summary:'Error',
-          detail:'Product cannot be created!'
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Product is not created!'
         });
       }
     );
   }
 
-  private _updateProduct(productData: FormData){
-    this.productsService.updateProduct(productData, this.currentProductID).subscribe(
-      (product: Product) => {
+  private _updateProduct(productFormData: FormData) {
+    this.productsService.updateProduct(productFormData, this.currentProductId).subscribe(
+      () => {
         this.messageService.add({
-          severity:'success',
-          summary:'Success',
-          detail:`Product ${product.name} is updated!`
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Product is updated!'
         });
-        // Al crear una producte torna a la llista automaticament.
-        timer(2000).toPromise().then(() => {
-          this.location.back();
-        })
+        timer(2000)
+          .toPromise()
+          .then(() => {
+            this.location.back();
+          });
       },
       () => {
         this.messageService.add({
-          severity:'error',
-          summary:'Error',
-          detail:'Product cannot be updated!'
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Product is not updated!'
         });
       }
     );
-  }
-
-  onImageUpload(event: any) {
-    const file = event.target.files[0];
-    if(file) {
-      this.form.patchValue({image: file});
-      this.form.get('image')!.updateValueAndValidity();
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        this.imageDisplay = fileReader.result as string;
-      }
-      fileReader.readAsDataURL(file);
-    }
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe(params => {
-      if(params.id) {
+    this.route.params.subscribe((params) => {
+      if (params.id) {
         this.editMode = true;
-        this.currentProductID = params.id;
-        this.productsService.getProduct(params.id).subscribe(product => {
+        this.currentProductId = params.id;
+        this.productsService.getProduct(params.id).subscribe((product) => {
           this.productForm.name.setValue(product.name);
           this.productForm.category.setValue(product.category!.id);
           this.productForm.brand.setValue(product.brand);
@@ -146,8 +131,8 @@ export class ProductsFormComponent implements OnInit {
           this.productForm.isFeatured.setValue(product.isFeatured);
           this.productForm.description.setValue(product.description);
           this.productForm.richDescription.setValue(product.richDescription);
-          this.imageDisplay = product.image as string;
-          //Desactivatem el validator al editar un producte. Al crear si estarà la validació.
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          this.imageDisplay = product.image!;
           this.productForm.image.setValidators([]);
           this.productForm.image.updateValueAndValidity();
         });
@@ -155,6 +140,24 @@ export class ProductsFormComponent implements OnInit {
     });
   }
 
-  onCancel(){}
+  onCancel() {
+    this.location.back();
+  }
 
+  onImageUpload(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.form.patchValue({ image: file });
+      this.form.get('image')!.updateValueAndValidity();
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        this.imageDisplay = fileReader.result!;
+      };
+      fileReader.readAsDataURL(file);
+    }
+  }
+
+  get productForm() {
+    return this.form.controls;
+  }
 }
