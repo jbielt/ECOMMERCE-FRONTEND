@@ -4,6 +4,7 @@ import {CategoriesService, Category, Product, ProductsService} from "@eastblue/p
 import {timer} from "rxjs";
 import {MessageService} from "primeng/api";
 import {Location} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'admin-products-form',
@@ -15,17 +16,20 @@ export class ProductsFormComponent implements OnInit {
   form: FormGroup;
   isSubmitted = false;
   categories: Category[]= [];
-  imageDisplay: string | ArrayBuffer | null;
+  imageDisplay: string | ArrayBuffer;
+  currentProductID: string;
 
   constructor(private formBuilder: FormBuilder,
               private categoriesService: CategoriesService,
               private productsService: ProductsService,
               private messageService: MessageService,
-              private location: Location) { }
+              private location: Location,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this._initForm();
     this._getCategories();
+    this._checkEditMode();
   }
 
   private _initForm() {
@@ -37,7 +41,7 @@ export class ProductsFormComponent implements OnInit {
       countInStock: ['', Validators.required],
       description: ['', Validators.required],
       richDescription: [''],
-      image: [''],
+      image: ['', Validators.required],
       isFeatured: [false],
     })
   }
@@ -62,7 +66,11 @@ export class ProductsFormComponent implements OnInit {
     Object.keys(this.productForm).map((key) => {
       productFormData.append(key, this.productForm[key].value);
     });
-    this._addProduct(productFormData);
+    if(this.editMode) {
+      this._updateProduct(productFormData);
+    }else{
+      this._addProduct(productFormData);
+    }
   }
 
    _addProduct(productData: FormData) {
@@ -88,6 +96,29 @@ export class ProductsFormComponent implements OnInit {
     );
   }
 
+  private _updateProduct(productData: FormData){
+    this.productsService.updateProduct(productData, this.currentProductID).subscribe(
+      (product: Product) => {
+        this.messageService.add({
+          severity:'success',
+          summary:'Success',
+          detail:`Product ${product.name} is updated!`
+        });
+        // Al crear una producte torna a la llista automaticament.
+        timer(2000).toPromise().then(() => {
+          this.location.back();
+        })
+      },
+      () => {
+        this.messageService.add({
+          severity:'error',
+          summary:'Error',
+          detail:'Product cannot be updated!'
+        });
+      }
+    );
+  }
+
   onImageUpload(event: any) {
     const file = event.target.files[0];
     if(file) {
@@ -95,10 +126,33 @@ export class ProductsFormComponent implements OnInit {
       this.form.get('image')!.updateValueAndValidity();
       const fileReader = new FileReader();
       fileReader.onload = () => {
-        this.imageDisplay = fileReader.result;
+        this.imageDisplay = fileReader.result as string;
       }
       fileReader.readAsDataURL(file);
     }
+  }
+
+  private _checkEditMode() {
+    this.route.params.subscribe(params => {
+      if(params.id) {
+        this.editMode = true;
+        this.currentProductID = params.id;
+        this.productsService.getProduct(params.id).subscribe(product => {
+          this.productForm.name.setValue(product.name);
+          this.productForm.category.setValue(product.category!.id);
+          this.productForm.brand.setValue(product.brand);
+          this.productForm.price.setValue(product.price);
+          this.productForm.countInStock.setValue(product.countInStock);
+          this.productForm.isFeatured.setValue(product.isFeatured);
+          this.productForm.description.setValue(product.description);
+          this.productForm.richDescription.setValue(product.richDescription);
+          this.imageDisplay = product.image as string;
+          //Desactivatem el validator al editar un producte. Al crear si estarà la validació.
+          this.productForm.image.setValidators([]);
+          this.productForm.image.updateValueAndValidity();
+        });
+      }
+    });
   }
 
   onCancel(){}

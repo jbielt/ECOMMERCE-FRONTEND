@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Product, ProductsService} from "@eastblue/products";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'admin-products-list',
@@ -10,7 +11,8 @@ export class ProductsListComponent implements OnInit {
   products: Product[] = [];
 
 
-  constructor(private productService: ProductsService) { }
+  constructor(private productService: ProductsService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this._getProducts();
@@ -28,6 +30,6 @@ export class ProductsListComponent implements OnInit {
   }
 
   updateProduct(productId: string) {
-
+    this.router.navigateByUrl(`products/form/${productId}`);
   }
 }
