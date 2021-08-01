@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {User, UsersService} from "@eastblue/users";
 import {timer} from "rxjs";
 
+
 @Component({
   selector: 'admin-users-form',
   templateUrl: './users-form.component.html'
@@ -16,6 +17,7 @@ export class UsersFormComponent implements OnInit {
   form: FormGroup;
   isSubmitted = false;
   currentUserID: string;
+  countries = [] as any;
 
   constructor(private messageService: MessageService,
               private formBuilder: FormBuilder,
@@ -26,6 +28,11 @@ export class UsersFormComponent implements OnInit {
   ngOnInit(): void {
     this._initForm();
     this._checkEditMode();
+    this._getCountries();
+  }
+
+  private _getCountries() {
+    this.countries = this.usersService.getCountries();
   }
 
   private _initForm() {

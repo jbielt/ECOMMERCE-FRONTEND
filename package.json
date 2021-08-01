@@ -41,6 +41,7 @@
     "@nrwl/angular": "12.5.8",
     "@popperjs/core": "^2.9.2",
     "bootstrap": "^5.0.2",
+    "i18n-iso-countries": "^6.8.0",
     "jquery": "^3.6.0",
     "normalize.css": "^8.0.1",
     "primeflex": "^3.0.1",

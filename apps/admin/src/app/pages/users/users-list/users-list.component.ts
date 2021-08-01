@@ -57,4 +57,12 @@ export class UsersListComponent implements OnInit {
     })
   }
 
+  getCountryName(countryKey: string) {
+    if (countryKey) {
+      return this.usersService.getCountry(countryKey);
+    }else{
+      return;
+    }
+  }
+
 }
