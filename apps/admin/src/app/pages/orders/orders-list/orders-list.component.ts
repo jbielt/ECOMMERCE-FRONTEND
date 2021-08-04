@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Order, OrdersService} from "@eastblue/orders";
+import {Router} from "@angular/router";
 
 const ORDER_STATUS: any = {
   0 : {
@@ -33,7 +34,8 @@ export class OrdersListComponent implements OnInit {
   orders: Order[] = [];
   orderStatus = ORDER_STATUS;
 
-  constructor(private ordersService: OrdersService) { }
+  constructor(private ordersService: OrdersService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this._getOrders();
@@ -51,7 +53,7 @@ export class OrdersListComponent implements OnInit {
 
   }
 
-  showOrder(id: string) {
-
+  showOrder(orderId: string) {
+      this.router.navigateByUrl(`orders/${orderId}`);
   }
 }
