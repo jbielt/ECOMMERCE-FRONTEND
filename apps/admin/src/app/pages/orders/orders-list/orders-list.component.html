@@ -17,8 +17,13 @@
             <tr>
               <td>{{order.user.name}}</td>
               <td>{{order.totalPrice}}</td>
-              <td>{{order.dateOrdered}}</td>
-              <td>{{order.status}}</td>
+              <td>{{order.dateOrdered | date: 'short'}}</td>
+              <td>
+                <p-tag
+                  [value]="orderStatus[order.status].label"
+                  [severity]="orderStatus[order.status].color">
+                </p-tag>
+              </td>
               <td>
                 <p-button
                   (click)="deleteOrder(order.id)"
