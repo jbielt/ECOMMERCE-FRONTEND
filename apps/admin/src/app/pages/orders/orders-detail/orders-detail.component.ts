@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Order, OrdersService} from "@eastblue/orders";
+import {Order, OrderItem, OrdersService} from "@eastblue/orders";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({

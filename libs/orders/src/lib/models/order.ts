@@ -3,7 +3,7 @@ import {User} from "@eastblue/users";
 
 export class Order {
   id?: string;
-  orderItem?: OrderItem;
+  orderItems: OrderItem[];
   shippingAddress1?: string;
   shippingAddress2?: string;
   city?: string;
