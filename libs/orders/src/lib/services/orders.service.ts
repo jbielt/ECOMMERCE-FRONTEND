@@ -26,8 +26,8 @@ export class OrdersService {
     return this.http.post<Order>(this.apiURLOrders, order);
   }
 
-  updateOrder(order: Order): Observable<Order> {
-    return this.http.put<Order>(`${this.apiURLOrders}/${order.id}`, order);
+  updateOrder(orderStatus: { status: string }, orderId: string | undefined): Observable<Order> {
+    return this.http.put<Order>(`${this.apiURLOrders}/${orderId}`, orderStatus);
   }
   deleteOrder(orderId: string): Observable<any> {
     return this.http.delete<any>(`${this.apiURLOrders}/${orderId}`);

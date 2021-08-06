@@ -1,29 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Order, OrdersService} from "@eastblue/orders";
 import {Router} from "@angular/router";
-
-const ORDER_STATUS: any = {
-  0 : {
-    label: 'Pending',
-    color: 'primary'
-  },
-  1 : {
-    label: 'Processed',
-    color: 'warning'
-  },
-  2 : {
-    label: 'Shipped',
-    color: 'warning'
-  },
-  3 : {
-    label: 'Delivered',
-    color: 'success'
-  },
-  4 : {
-    label: 'Failed',
-    color: 'danger'
-  }
-}
+import {ORDER_STATUS} from '../order.constants'
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
   selector: 'admin-orders-list',
@@ -35,7 +14,9 @@ export class OrdersListComponent implements OnInit {
   orderStatus = ORDER_STATUS;
 
   constructor(private ordersService: OrdersService,
-              private router: Router) { }
+              private router: Router,
+              private confirmationService: ConfirmationService,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this._getOrders();
@@ -47,10 +28,31 @@ export class OrdersListComponent implements OnInit {
     })
   }
 
-
-
-  deleteOrder(id: string) {
-
+  deleteOrder(orderId: string) {
+    this.confirmationService.confirm({
+      message: 'Do you want to Delete this Order?',
+      header: 'Delete Order',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.ordersService.deleteOrder(orderId).subscribe(
+          () => {
+            this._getOrders();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Order is deleted!'
+            });
+          },
+          () => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Order is not deleted!'
+            });
+          }
+        );
+      }
+    });
   }
 
   showOrder(orderId: string) {
