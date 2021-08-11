@@ -15,6 +15,8 @@ import { ProductsListComponent } from './pages/products/products-list/products-l
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 import { UsersListComponent } from './pages/users/users-list/users-list.component';
+import {UsersModule} from "@eastblue/users";
+
 
 import {CardModule} from 'primeng/card';
 import {ToolbarModule} from 'primeng/toolbar';
@@ -135,7 +137,8 @@ const routes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    UX_MODULE
+    UX_MODULE,
+    UsersModule
   ],
   providers: [CategoriesService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],
