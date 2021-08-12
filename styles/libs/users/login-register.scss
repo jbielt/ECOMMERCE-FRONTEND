@@ -6,5 +6,7 @@
     height: 525px;
     background-color: var(--surface-a);
     position: absolute;
+    left: calc(50% - 325px);
+    top: calc(50% - 260px);
   }
 }
