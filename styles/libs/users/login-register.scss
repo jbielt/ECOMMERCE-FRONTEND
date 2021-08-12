@@ -8,5 +8,9 @@
     position: absolute;
     left: calc(50% - 325px);
     top: calc(50% - 260px);
+
+    .full-btn {
+      width: 100%;
+    }
   }
 }
