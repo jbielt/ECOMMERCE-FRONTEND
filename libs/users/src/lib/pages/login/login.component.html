@@ -22,7 +22,7 @@
             <div class="col-12">
               <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                <input type="password" pInputText placeholder="Password">
+                <input type="password" formControlName="password" pInputText placeholder="Password">
               </div>
               <small *ngIf="loginForm.password.invalid && isSubmitted" class="p-error">
                 password is required
@@ -30,6 +30,9 @@
             </div>
             <div class="col-12">
               <p-button label="Submit" styleClass="full-btn" (onClick)="onSubmit()"></p-button>
+            </div>
+            <div class="col-12" *ngIf="isSubmitted && authError">
+              <small class="p-error">{{authMessage}}</small>
             </div>
           </div>
         </form>
