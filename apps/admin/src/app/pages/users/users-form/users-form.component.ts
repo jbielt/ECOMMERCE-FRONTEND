@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {Location} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {User, UsersService} from "@eastblue/users";
-import {timer} from "rxjs";
+import {Subject, timer} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 
 @Component({
   selector: 'admin-users-form',
   templateUrl: './users-form.component.html'
 })
-export class UsersFormComponent implements OnInit {
+export class UsersFormComponent implements OnInit, OnDestroy {
 
   editMode = false;
   form: FormGroup;
   isSubmitted = false;
   currentUserID: string;
   countries = [] as any;
+  endSubscription$: Subject<any> = new Subject();
 
   constructor(private messageService: MessageService,
               private formBuilder: FormBuilder,
@@ -29,6 +31,11 @@ export class UsersFormComponent implements OnInit {
     this._initForm();
     this._checkEditMode();
     this._getCountries();
+  }
+
+  ngOnDestroy() {
+    this.endSubscription$.next();
+    this.endSubscription$.complete();
   }
 
   private _getCountries() {
@@ -80,7 +87,10 @@ export class UsersFormComponent implements OnInit {
   }
 
   private _updateUser(user: User) {
-    this.usersService.updateUser(user).subscribe(
+    this.usersService
+      .updateUser(user)
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe(
       (user: User) => {
         this.messageService.add({
           severity:'success',
@@ -102,7 +112,10 @@ export class UsersFormComponent implements OnInit {
   }
 
   private _addUser(user: User) {
-    this.usersService.createUser(user).subscribe(
+    this.usersService
+      .createUser(user)
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe(
       (user: User) => {
         this.messageService.add({
           severity:'success',
@@ -124,25 +137,29 @@ export class UsersFormComponent implements OnInit {
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe((params) => {
-      if (params.id) {
-        this.editMode = true;
-        this.currentUserID = params.id;
-        this.usersService.getUser(params.id).subscribe((user) => {
-          this.userForm.name.setValue(user.name);
-          this.userForm.email.setValue(user.email);
-          this.userForm.phone.setValue(user.phone);
-          this.userForm.isAdmin.setValue(user.isAdmin);
-          this.userForm.street.setValue(user.street);
-          this.userForm.apartment.setValue(user.apartment);
-          this.userForm.zip.setValue(user.zip);
-          this.userForm.city.setValue(user.city);
-          this.userForm.country.setValue(user.country);
-
-          this.userForm.password.setValidators([]);
-          this.userForm.password.updateValueAndValidity();
-        });
-      }
+    this.route.params
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe((params) => {
+        if (params.id) {
+          this.editMode = true;
+          this.currentUserID = params.id;
+          this.usersService
+            .getUser(params.id)
+            .pipe(takeUntil(this.endSubscription$))
+            .subscribe((user) => {
+              this.userForm.name.setValue(user.name);
+              this.userForm.email.setValue(user.email);
+              this.userForm.phone.setValue(user.phone);
+              this.userForm.isAdmin.setValue(user.isAdmin);
+              this.userForm.street.setValue(user.street);
+              this.userForm.apartment.setValue(user.apartment);
+              this.userForm.zip.setValue(user.zip);
+              this.userForm.city.setValue(user.city);
+              this.userForm.country.setValue(user.country);
+              this.userForm.password.setValidators([]);
+              this.userForm.password.updateValueAndValidity();
+            });
+        }
     });
   }
 

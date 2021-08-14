@@ -1,23 +1,25 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {CategoriesService, Category, Product, ProductsService} from '@eastblue/products';
 import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
+import {Subject, timer} from 'rxjs';
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'admin-products-form',
   templateUrl: './products-form.component.html',
   styles: []
 })
-export class ProductsFormComponent implements OnInit {
+export class ProductsFormComponent implements OnInit, OnDestroy {
   editMode = false;
   form: FormGroup;
   isSubmitted = false;
   categories: Category[] = [];
   imageDisplay: string | ArrayBuffer;
   currentProductId: string;
+  endSubscription$: Subject<any> = new Subject();
 
   constructor(private formBuilder: FormBuilder,
               private productsService: ProductsService,
@@ -31,6 +33,11 @@ export class ProductsFormComponent implements OnInit {
     this._initForm();
     this._getCategories();
     this._checkEditMode();
+  }
+
+  ngOnDestroy() {
+    this.endSubscription$.next();
+    this.endSubscription$.complete();
   }
 
   private _initForm() {
@@ -48,9 +55,12 @@ export class ProductsFormComponent implements OnInit {
   }
 
   private _getCategories() {
-    this.categoriesService.getCategories().subscribe((categories) => {
-      this.categories = categories;
-    });
+    this.categoriesService
+      .getCategories()
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe((categories) => {
+        this.categories = categories;
+      });
   }
 
   onSubmit() {
@@ -69,7 +79,10 @@ export class ProductsFormComponent implements OnInit {
   }
 
   private _addProduct(productData: FormData) {
-    this.productsService.createProduct(productData).subscribe(
+    this.productsService
+      .createProduct(productData)
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe(
       (product: Product) => {
         this.messageService.add({
           severity: 'success',
@@ -93,7 +106,10 @@ export class ProductsFormComponent implements OnInit {
   }
 
   private _updateProduct(productFormData: FormData) {
-    this.productsService.updateProduct(productFormData, this.currentProductId).subscribe(
+    this.productsService
+      .updateProduct(productFormData, this.currentProductId)
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe(
       () => {
         this.messageService.add({
           severity: 'success',
@@ -117,24 +133,28 @@ export class ProductsFormComponent implements OnInit {
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe((params) => {
+    this.route.params
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe((params) => {
       if (params.id) {
         this.editMode = true;
         this.currentProductId = params.id;
-        this.productsService.getProduct(params.id).subscribe((product) => {
-          this.productForm.name.setValue(product.name);
-          this.productForm.category.setValue(product.category!.id);
-          this.productForm.brand.setValue(product.brand);
-          this.productForm.price.setValue(product.price);
-          this.productForm.countInStock.setValue(product.countInStock);
-          this.productForm.isFeatured.setValue(product.isFeatured);
-          this.productForm.description.setValue(product.description);
-          this.productForm.richDescription.setValue(product.richDescription);
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          this.imageDisplay = product.image!;
-          this.productForm.image.setValidators([]);
-          this.productForm.image.updateValueAndValidity();
-        });
+        this.productsService.getProduct(params.id)
+          .pipe(takeUntil(this.endSubscription$))
+          .subscribe((product) => {
+            this.productForm.name.setValue(product.name);
+            this.productForm.category.setValue(product.category!.id);
+            this.productForm.brand.setValue(product.brand);
+            this.productForm.price.setValue(product.price);
+            this.productForm.countInStock.setValue(product.countInStock);
+            this.productForm.isFeatured.setValue(product.isFeatured);
+            this.productForm.description.setValue(product.description);
+            this.productForm.richDescription.setValue(product.richDescription);
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            this.imageDisplay = product.image!;
+            this.productForm.image.setValidators([]);
+            this.productForm.image.updateValueAndValidity();
+          });
       }
     });
   }

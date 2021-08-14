@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Product, ProductsService} from "@eastblue/products";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'admin-products-list',
   templateUrl: './products-list.component.html'
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, OnDestroy {
 
   products: Product[] = [];
+  endSubscription$: Subject<any> = new Subject();
+
 
 
   constructor(private productService: ProductsService,
@@ -20,11 +24,18 @@ export class ProductsListComponent implements OnInit {
   ngOnInit(): void {
     this._getProducts();
   }
+  ngOnDestroy() {
+    this.endSubscription$.next();
+    this.endSubscription$.complete();
+  }
 
   private _getProducts() {
-    this.productService.getProducts().subscribe(products => {
-      this.products = products;
-    })
+    this.productService
+      .getProducts()
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe(products => {
+        this.products = products;
+      })
   }
 
 
@@ -34,7 +45,10 @@ export class ProductsListComponent implements OnInit {
       header: 'Delete Product',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.productService.deleteProduct(productId).subscribe(
+        this.productService
+          .deleteProduct(productId)
+          .pipe(takeUntil(this.endSubscription$))
+          .subscribe(
           () => {
             this._getProducts();
             this.messageService.add({

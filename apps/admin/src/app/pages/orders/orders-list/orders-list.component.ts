@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Order, OrdersService} from "@eastblue/orders";
 import {Router} from "@angular/router";
 import {ORDER_STATUS} from '../order.constants'
 import {ConfirmationService, MessageService} from "primeng/api";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'admin-orders-list',
   templateUrl: './orders-list.component.html'
 })
-export class OrdersListComponent implements OnInit {
+export class OrdersListComponent implements OnInit, OnDestroy {
 
   orders: Order[] = [];
   orderStatus = ORDER_STATUS;
+  endSubscription$: Subject<any> = new Subject();
+
 
   constructor(private ordersService: OrdersService,
               private router: Router,
@@ -21,11 +25,17 @@ export class OrdersListComponent implements OnInit {
   ngOnInit(): void {
     this._getOrders();
   }
+  ngOnDestroy() {
+    this.endSubscription$.next();
+    this.endSubscription$.complete();
+  }
 
   _getOrders() {
-    this.ordersService.getOrders().subscribe((orders) => {
-      this.orders = orders;
-    })
+    this.ordersService.getOrders()
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe((orders) => {
+        this.orders = orders;
+      })
   }
 
   deleteOrder(orderId: string) {
@@ -34,7 +44,10 @@ export class OrdersListComponent implements OnInit {
       header: 'Delete Order',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.ordersService.deleteOrder(orderId).subscribe(
+        this.ordersService
+          .deleteOrder(orderId)
+          .pipe(takeUntil(this.endSubscription$))
+          .subscribe(
           () => {
             this._getOrders();
             this.messageService.add({

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {LocalstorageService} from "../../services/localstorage.service";
 import {Router} from "@angular/router";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'users-login',
@@ -11,11 +13,13 @@ import {Router} from "@angular/router";
   styles: [
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginFormGroup: FormGroup;
   isSubmitted = false;
   authError= false;
   authMessage = 'Email or Password are wrong';
+  endSubscription$: Subject<any> = new Subject();
+
 
   constructor(private formBuilder: FormBuilder,
               private auth: AuthService,
@@ -24,7 +28,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this._initLoginForm();
-
+  }
+  ngOnDestroy() {
+    this.endSubscription$.next();
+    this.endSubscription$.complete();
   }
 
   private _initLoginForm() {
@@ -43,12 +50,15 @@ export class LoginComponent implements OnInit {
     if(this.loginFormGroup.invalid){
       return;
     }
-    this.auth.login(loginData.email, loginData.password).subscribe(
+    this.auth
+      .login(loginData.email, loginData.password)
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe(
   (user) => {
-        this.authError = false;
-        this.localStorageService.setToken(user.token);
-        this.router.navigate(['/']);
-    },
+          this.authError = false;
+          this.localStorageService.setToken(user.token);
+          this.router.navigate(['/']);
+        },
   (error: HttpErrorResponse) => {
         this.authError = true;
         console.log(error)

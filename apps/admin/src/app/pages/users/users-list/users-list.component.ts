@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User, UsersService} from "@eastblue/users";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {Router} from "@angular/router";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'admin-users-list',
   templateUrl: './users-list.component.html'
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit, OnDestroy {
 
   users: User[] = [];
+  endSubscription$: Subject<any> = new Subject();
+
 
   constructor(private confirmationService: ConfirmationService,
               private usersService: UsersService,
@@ -19,15 +23,22 @@ export class UsersListComponent implements OnInit {
   ngOnInit(): void {
     this._getUsers();
   }
+  ngOnDestroy() {
+    this.endSubscription$.next();
+    this.endSubscription$.complete();
+  }
 
   updateUser(userId: string) {
     this.router.navigateByUrl(`users/form/${userId}`);
   }
 
   private _getUsers() {
-    this.usersService.getUsers().subscribe(users => {
-      this.users = users;
-    });
+    this.usersService
+      .getUsers()
+      .pipe(takeUntil(this.endSubscription$))
+      .subscribe(users => {
+        this.users = users;
+      });
   }
 
   deleteUser(userId: string) {
@@ -36,7 +47,10 @@ export class UsersListComponent implements OnInit {
       header: 'Delete User',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.usersService.deleteUser(userId).subscribe(
+        this.usersService
+          .deleteUser(userId)
+          .pipe(takeUntil(this.endSubscription$))
+          .subscribe(
           () => {
             this._getUsers();
             this.messageService.add({
