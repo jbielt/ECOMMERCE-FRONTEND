@@ -9,10 +9,10 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { RouterModule, Routes } from "@angular/router";
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { UiModule } from "@eastblue/ui";
 import {AccordionModule} from 'primeng/accordion';
 import { NavComponent } from './shared/nav/nav.component';
 import {ProductsModule} from "@eastblue/products";
+import {UiModule} from "@eastblue/ui";
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -29,12 +29,10 @@ const routes: Routes = [
   imports: [BrowserModule,
             BrowserAnimationsModule,
             RouterModule.forRoot(routes),
-            UiModule,
             AccordionModule,
-            ProductsModule],
+            ProductsModule,
+            UiModule],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [
-  ],
 })
 export class AppModule {}
