@@ -1,4 +1,5 @@
 //Base
+@import '~normalize.css/normalize.css';
 @import "./base/colors";
 @import "./base/fonts";
 @import "./base/mixins";
@@ -20,10 +21,21 @@
 //Shared (file scss created on ui folder (libs styles)
 @import "./apps/shop/shared/header";
 @import "./apps/shop/shared/footer";
+@import "./apps/shop/shared/nav";
+
+
 
 //Libs
 @import './libs/ui/ui';
+@import './libs/products/products';
 
+
+.container {
+  width: 1200px;
+  padding: 15px;
+  margin: 0 auto;
+  background-color: var(--surface-100);
+}
 
 
 
