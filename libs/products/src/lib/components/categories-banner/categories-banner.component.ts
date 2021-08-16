@@ -5,7 +5,7 @@ import { CategoriesService } from '../../services/categories.service';
 import {takeUntil} from "rxjs/operators";
 
 @Component({
-  selector: 'categories-banner',
+  selector: 'products-categories-banner',
   templateUrl: './categories-banner.component.html'
 })
 export class CategoriesBannerComponent implements OnInit {

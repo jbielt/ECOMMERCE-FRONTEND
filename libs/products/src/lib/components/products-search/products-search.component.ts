@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'products-search',
+  selector: 'products-products-search',
   templateUrl: './products-search.component.html'
 })
 export class ProductsSearchComponent implements OnInit {

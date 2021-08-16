@@ -13,7 +13,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "eastblue",
+            "prefix": "products",
             "style": "camelCase"
           }
         ],
@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "eastblue",
+            "prefix": "products",
             "style": "kebab-case"
           }
         ]
