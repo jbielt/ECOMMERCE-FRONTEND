@@ -6,10 +6,13 @@ import {RouterModule} from "@angular/router";
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { FeaturedProductsComponent } from './components/featured-products/featured-products.component';
 
+import {ButtonModule} from "primeng/button";
+
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ButtonModule
   ],
   declarations: [
     ProductsSearchComponent,
