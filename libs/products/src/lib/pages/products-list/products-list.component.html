@@ -1,12 +1,12 @@
 <div class="products-page">
   <div class="grid">
-    <div class="col-3">
+    <div class="col-3" *ngIf="!isCategoryPage">
       <h4>Categories</h4>
       <div class="field-checkbox" *ngFor="let category of categories">
         <p-checkbox
           [(ngModel)]="category.checked"
           [binary]="true"
-          [inputId]="category.id!"
+          inputId="category.id"
           (onChange)="categoryFilter()">
         </p-checkbox>
         <label [for]="category.id">{{category.name}}</label>
