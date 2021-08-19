@@ -22,7 +22,6 @@ export class ProductsListComponent implements OnInit {
       params.categoryid ? this._getProducts([params.categoryid]) : this._getProducts();
       params.categoryid ? this.isCategoryPage = true : this.isCategoryPage = false;
     });
-    // this._getProducts();
     this._getCategories();
   }
 
