@@ -20,28 +20,28 @@ export class ProductsListComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       params.categoryid ? this._getProducts([params.categoryid]) : this._getProducts();
-      params.categoryid ? this.isCategoryPage = false : this.isCategoryPage = true;
+      params.categoryid ? this.isCategoryPage = true : this.isCategoryPage = false;
     });
     // this._getProducts();
     this._getCategories();
   }
 
   private _getProducts(categoriesFilter?: any[]) {
-    this.productService.getProducts(categoriesFilter).subscribe(products => {
+    this.productService.getProducts(categoriesFilter).subscribe((products) => {
       this.products = products;
     })
   }
 
   private _getCategories() {
-    this.categoryService.getCategories().subscribe(categories => {
+    this.categoryService.getCategories().subscribe((categories) => {
       this.categories = categories;
     })
   }
 
   categoryFilter() {
     const selectedCategories = this.categories
-      .filter(category => category.checked)
-      .map(category => category.id);
+      .filter((category) => category.checked)
+      .map((category) => category.id);
     this._getProducts(selectedCategories);
   }
 

@@ -6,10 +6,10 @@
         <p-checkbox
           [(ngModel)]="category.checked"
           [binary]="true"
-          inputId="category.id"
+          [inputId]="category.id!"
           (onChange)="categoryFilter()">
         </p-checkbox>
-        <label [for]="category.id">{{category.name}}</label>
+        <label for="{{category.id}}">{{category.name}}</label>
       </div>
     </div>
     <div class="col-9">
