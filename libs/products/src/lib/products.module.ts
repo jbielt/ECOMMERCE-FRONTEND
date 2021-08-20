@@ -8,6 +8,7 @@ import { FeaturedProductsComponent } from './components/featured-products/featur
 import { ProductsListComponent } from './pages/products-list/products-list.component';
 import {FormsModule} from "@angular/forms";
 import { ProductPageComponent } from './pages/product-page/product-page.component';
+import {UiModule} from "@eastblue/ui";
 
 
 import {ButtonModule} from "primeng/button";
@@ -40,7 +41,8 @@ const routes: Routes = [
     FormsModule,
     RatingModule,
     InputNumberModule,
-    RippleModule
+    RippleModule,
+    UiModule
   ],
   declarations: [
     ProductsSearchComponent,
