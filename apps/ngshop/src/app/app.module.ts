@@ -13,24 +13,30 @@ import { NavComponent } from './shared/nav/nav.component';
 import {ProductsModule} from "@eastblue/products";
 import {UiModule} from "@eastblue/ui";
 import {HttpClientModule} from "@angular/common/http";
+import {OrdersModule} from "@eastblue/orders";
 
 const routes: Routes = [
   {path: '', component: HomePageComponent}
 ]
 
 @NgModule({
-  declarations: [AppComponent,
-                  HomePageComponent,
-                  HeaderComponent,
-                  FooterComponent,
-                  NavComponent],
-  imports: [BrowserModule,
-            BrowserAnimationsModule,
-            RouterModule.forRoot(routes),
-            HttpClientModule,
-            AccordionModule,
-            ProductsModule,
-            UiModule],
+  declarations: [
+    AppComponent,
+    HomePageComponent,
+    HeaderComponent,
+    FooterComponent,
+    NavComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    AccordionModule,
+    ProductsModule,
+    UiModule,
+    OrdersModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
