@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { RouterModule, Routes } from "@angular/router";
@@ -14,6 +13,9 @@ import {ProductsModule} from "@eastblue/products";
 import {UiModule} from "@eastblue/ui";
 import {HttpClientModule} from "@angular/common/http";
 import {OrdersModule} from "@eastblue/orders";
+import { MessagesComponent } from './shared/messages/messages.component';
+
+import {ToastModule} from "primeng/toast";
 
 const routes: Routes = [
   {path: '', component: HomePageComponent}
@@ -25,7 +27,8 @@ const routes: Routes = [
     HomePageComponent,
     HeaderComponent,
     FooterComponent,
-    NavComponent
+    NavComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +38,10 @@ const routes: Routes = [
     AccordionModule,
     ProductsModule,
     UiModule,
-    OrdersModule
+    OrdersModule,
+    ToastModule
   ],
-  providers: [],
+  providers: [MessagesComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
