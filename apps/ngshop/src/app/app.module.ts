@@ -13,9 +13,11 @@ import {ProductsModule} from "@eastblue/products";
 import {UiModule} from "@eastblue/ui";
 import {HttpClientModule} from "@angular/common/http";
 import {OrdersModule} from "@eastblue/orders";
-import { MessagesComponent } from './shared/messages/messages.component';
 
 import {ToastModule} from "primeng/toast";
+import { MessagesComponent } from './shared/messages/messages.component';
+import {MessageService} from "primeng/api";
+
 
 const routes: Routes = [
   {path: '', component: HomePageComponent}
@@ -41,7 +43,7 @@ const routes: Routes = [
     OrdersModule,
     ToastModule
   ],
-  providers: [MessagesComponent],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
