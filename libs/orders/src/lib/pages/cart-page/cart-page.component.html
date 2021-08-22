@@ -1,0 +1,54 @@
+<div class="cart-page">
+  <div class="grid">
+    <div class="col-8">
+      <div>
+        <p-button
+          label="Continue shopping"
+          icon="pi pi-arrow-left"
+          (onClick)="backToShop()">
+        </p-button>
+      </div>
+      <div>
+        <h4>My Cart: {{ 2 }} Item(s)</h4>
+      </div>
+      <div class="cart-shipping mb-5">
+        Shipping after the payment, Delivery time: 1 to 4 working days.
+      </div>
+      <div class="cart-item">
+        <div class="grid p-fluid">
+          <div class="col-2 cart-item-image">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="">
+          </div>
+          <div class="col-7">
+            <div class="cart-item-name">Product Name</div>
+            <div class="cart-item-price">{{ 250 | currency }}</div>
+            <div class="cart-item-remove">
+              <p-button
+                icon="pi pi-trash"
+                (onClick)="deleteCartItem()">
+              </p-button>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="field cart-item-quantity">
+              <p-inputNumber
+                mode="decimal"
+                [showButtons]="true"
+                inputId="quantity"
+                [min]="1"
+                [max]="100">
+              </p-inputNumber>
+            </div>
+            <div class="cart-item-subtotal">
+              Subtotal:
+              <span class="cart-item-subtotal-value">{{ 200 | currency }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        order summery
+      </div>
+    </div>
+  </div>
+</div>
