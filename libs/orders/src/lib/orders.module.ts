@@ -5,6 +5,7 @@ import { CartIconComponent } from './components/cart-icon/cart-icon.component';
 import {RouterModule, Routes} from "@angular/router";
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
+import {FormsModule} from "@angular/forms";
 
 import {BadgeModule} from "primeng/badge";
 import {ButtonModule} from "primeng/button";
@@ -23,7 +24,8 @@ const routes: Routes = [
     CommonModule,
     BadgeModule,
     ButtonModule,
-    InputNumberModule
+    InputNumberModule,
+    FormsModule
   ],
   declarations: [
     CartIconComponent,
