@@ -9,7 +9,7 @@
         </p-button>
       </div>
       <div>
-        <h4>My Cart: {{ 2 }} Item(s)</h4>
+        <h4>My Cart: {{ cartCount }} Item(s)</h4>
       </div>
       <div class="cart-shipping mb-5">
         Shipping after the payment, Delivery time: 1 to 4 working days.
@@ -28,7 +28,7 @@
             <div class="cart-item-remove">
               <p-button
                 icon="pi pi-trash"
-                (onClick)="deleteCartItem()">
+                (onClick)="deleteCartItem(cartItem)">
               </p-button>
             </div>
           </div>
@@ -49,9 +49,9 @@
           </div>
         </div>
       </div>
-      <div class="col-4">
-        order summery
-      </div>
+    </div>
+    <div class="col-4">
+      order summery
     </div>
   </div>
 </div>
