@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { CartService } from '../../services/cart.service';
 import { OrdersService } from '../../services/orders.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'orders-order-summary',
@@ -12,8 +13,14 @@ import { OrdersService } from '../../services/orders.service';
 export class OrderSummaryComponent implements OnInit, OnDestroy {
   endSubs$: Subject<any> = new Subject();
   totalPrice: number;
+  isCheckOut = false;
 
-  constructor(private cartService: CartService, private ordersService: OrdersService) {}
+  constructor(private cartService: CartService,
+              private ordersService: OrdersService,
+              private router: Router)
+  {
+    this.router.url.includes('checkout') ? this.isCheckOut = true : this.isCheckOut = false;
+  }
 
   ngOnInit(): void {
     this._getOrderSummary();
@@ -38,6 +45,10 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  navigateToCheckOut() {
+    this.router.navigate(['/checkout']);
   }
 }
 
