@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsersService } from '@eastblue/users';
+import {User, UsersService} from '@eastblue/users';
 import { OrderItem } from '../../models/orderItem';
+import {Order} from "@eastblue/orders";
 
 @Component({
   selector: 'orders-checkout-page',
@@ -50,6 +51,20 @@ export class CheckoutPageComponent implements OnInit {
     this.isSubmitted = true;
     if (this.checkoutFormGroup.invalid) {
       return;
+    }
+
+    const order: Order = {
+      orderItems: this.orderItems,
+      shippingAddress1: this.checkoutForm.street.value,
+      shippingAddress2: this.checkoutForm.apartment.value,
+      city: this.checkoutForm.city.value,
+      zip: this.checkoutForm.zip.value,
+      country: this.checkoutForm.country.value,
+      phone: this.checkoutForm.phone.value,
+      status: this.checkoutForm.status.value,
+      totalPrice: this.checkoutForm.totalPrice.value,
+      user: this.userId,
+      dateOrdered:this.checkoutForm.dateOrdered.value
     }
   }
 
