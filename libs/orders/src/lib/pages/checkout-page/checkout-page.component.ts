@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {User, UsersService} from '@eastblue/users';
 import { OrderItem } from '../../models/orderItem';
-import {Order} from "@eastblue/orders";
+import {Cart, CartService, Order} from "@eastblue/orders";
 
 @Component({
   selector: 'orders-checkout-page',
@@ -18,11 +18,13 @@ export class CheckoutPageComponent implements OnInit {
 
   constructor(private router: Router,
               private usersService: UsersService,
-              private formBuilder: FormBuilder) {}
+              private formBuilder: FormBuilder,
+              private cartService: CartService) {}
 
 
   ngOnInit(): void {
     this._initCheckoutForm();
+    this._getCartItems();
     this._getCountries();
   }
 
@@ -64,8 +66,14 @@ export class CheckoutPageComponent implements OnInit {
       status: this.checkoutForm.status.value,
       totalPrice: this.checkoutForm.totalPrice.value,
       user: this.userId,
-      dateOrdered:this.checkoutForm.dateOrdered.value
-    }
+      dateOrdered: `${Date.now()}`
+    };
+  }
+
+  private _getCartItems() {
+    const cart: Cart = this.cartService.getCart();
+    this.orderItems = cart.items;
+
   }
 
   get checkoutForm() {
