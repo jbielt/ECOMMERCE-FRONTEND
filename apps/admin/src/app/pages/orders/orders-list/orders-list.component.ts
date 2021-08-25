@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Order, OrdersService} from "@eastblue/orders";
 import {Router} from "@angular/router";
-import {ORDER_STATUS} from '../order.constants'
+import {ORDER_STATUS} from '@eastblue/orders'
 import {ConfirmationService, MessageService} from "primeng/api";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";

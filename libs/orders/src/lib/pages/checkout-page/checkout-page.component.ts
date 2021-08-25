@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {User, UsersService} from '@eastblue/users';
 import { OrderItem } from '../../models/orderItem';
-import {Cart, CartService, Order} from "@eastblue/orders";
+import {Cart, CartService, Order, OrdersService, ORDER_STATUS} from "@eastblue/orders";
 
 @Component({
   selector: 'orders-checkout-page',
@@ -19,7 +19,8 @@ export class CheckoutPageComponent implements OnInit {
   constructor(private router: Router,
               private usersService: UsersService,
               private formBuilder: FormBuilder,
-              private cartService: CartService) {}
+              private cartService: CartService,
+              private orderService: OrdersService) {}
 
 
   ngOnInit(): void {
@@ -39,6 +40,17 @@ export class CheckoutPageComponent implements OnInit {
       apartment: ['', Validators.required],
       street: ['', Validators.required]
     });
+  }
+
+  private _getCartItems() {
+    const cart: Cart = this.cartService.getCart();
+    this.orderItems = cart.items!.map((item) => {
+      return {
+        product: item.productId,
+        quantity: item.quantity
+      }
+    });
+    console.log(this.orderItems)
   }
 
   private _getCountries() {
@@ -63,18 +75,19 @@ export class CheckoutPageComponent implements OnInit {
       zip: this.checkoutForm.zip.value,
       country: this.checkoutForm.country.value,
       phone: this.checkoutForm.phone.value,
-      status: this.checkoutForm.status.value,
-      totalPrice: this.checkoutForm.totalPrice.value,
+      status: 0,
+      //totalPrice: this.checkoutForm.totalPrice.value,
       user: this.userId,
       dateOrdered: `${Date.now()}`
     };
+
+    this.orderService.createOrder(order).subscribe(() => {
+      //redirect to thank you page // payment page
+      console.log('successfuly added')
+    });
   }
 
-  private _getCartItems() {
-    const cart: Cart = this.cartService.getCart();
-    this.orderItems = cart.items;
 
-  }
 
   get checkoutForm() {
     return this.checkoutFormGroup.controls;
