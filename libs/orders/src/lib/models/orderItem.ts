@@ -1,6 +1,5 @@
-import {Product} from "@eastblue/products";
 
 export class OrderItem {
-  product?: Product;
+  product?: string;
   quantity?: number;
 }

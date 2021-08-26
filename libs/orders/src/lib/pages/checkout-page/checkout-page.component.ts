@@ -13,7 +13,7 @@ export class CheckoutPageComponent implements OnInit {
   checkoutFormGroup: FormGroup;
   isSubmitted = false;
   orderItems: OrderItem[] = [];
-  userId: string;
+  userId = '60f2b598cd7c8d1f5c3375c0';
   countries: any = [];
 
   constructor(private router: Router,
@@ -44,16 +44,12 @@ export class CheckoutPageComponent implements OnInit {
 
   private _getCartItems() {
     const cart: Cart = this.cartService.getCart();
-    /*
     this.orderItems = cart.items!.map((item) => {
       return {
         product: item.productId,
         quantity: item.quantity
       }
     });
-    console.log(this.orderItems)
-
-     */
   }
 
   private _getCountries() {
@@ -69,7 +65,6 @@ export class CheckoutPageComponent implements OnInit {
     if (this.checkoutFormGroup.invalid) {
       return;
     }
-
     const order: Order = {
       orderItems: this.orderItems,
       shippingAddress1: this.checkoutForm.street.value,
@@ -83,14 +78,11 @@ export class CheckoutPageComponent implements OnInit {
       user: this.userId,
       dateOrdered: `${Date.now()}`
     };
-
     this.orderService.createOrder(order).subscribe(() => {
       //redirect to thank you page // payment page
       console.log('successfuly added')
     });
   }
-
-
 
   get checkoutForm() {
     return this.checkoutFormGroup.controls;

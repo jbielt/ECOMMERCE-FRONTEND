@@ -4,7 +4,6 @@ import {Order} from "../..";
 import {Observable} from "rxjs";
 import {environment} from "@env/environment";
 import {map} from "rxjs/operators";
-import {Product} from "@eastblue/products";
 
 @Injectable({
   providedIn: 'root'
