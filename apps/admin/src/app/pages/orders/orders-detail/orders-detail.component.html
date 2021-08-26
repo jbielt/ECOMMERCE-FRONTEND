@@ -37,12 +37,12 @@
         <div style="font-weight: bold" class="col-2">Subtotal</div>
       </div>
       <div class="row mb-5" *ngFor="let orderItem of order.orderItems">
-        <div class="col-2">{{orderItem.product.name}}</div>
-        <div class="col-2">{{orderItem.product.brand}}</div>
-        <div class="col-2">{{orderItem.product.category.name}}</div>
-        <div class="col-2">{{orderItem.product.price | currency}}</div>
+        <div class="col-2">{{orderItem.product!.name}}</div>
+        <div class="col-2">{{orderItem.product!.brand}}</div>
+        <div class="col-2">{{orderItem.product!.category.name}}</div>
+        <div class="col-2">{{orderItem.product!.price | currency}}</div>
         <div class="col-2">{{orderItem.quantity}}</div>
-        <div class="col-2">{{orderItem.product.price * orderItem.quantity | currency}}</div>
+        <div class="col-2">{{orderItem.product!.price * orderItem.quantity! | currency}}</div>
       </div>
       <div class="row" style="color: green">
         <div style="font-weight: bold" class="col-2 offset-8">Total Price</div>

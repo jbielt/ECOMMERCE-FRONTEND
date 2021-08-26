@@ -67,6 +67,8 @@ export class UsersFormComponent implements OnInit, OnDestroy {
       name: this.userForm.name.value,
       email: this.userForm.email.value,
       phone: this.userForm.phone.value,
+      //added password later (to see)
+      password: this.userForm.password.value,
       isAdmin: this.userForm.isAdmin.value,
       street: this.userForm.street.value,
       apartment: this.userForm.apartment.value,

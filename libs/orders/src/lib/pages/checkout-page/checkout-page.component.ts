@@ -44,6 +44,7 @@ export class CheckoutPageComponent implements OnInit {
 
   private _getCartItems() {
     const cart: Cart = this.cartService.getCart();
+    /*
     this.orderItems = cart.items!.map((item) => {
       return {
         product: item.productId,
@@ -51,6 +52,8 @@ export class CheckoutPageComponent implements OnInit {
       }
     });
     console.log(this.orderItems)
+
+     */
   }
 
   private _getCountries() {
