@@ -80,6 +80,8 @@ export class CheckoutPageComponent implements OnInit {
     };
     this.orderService.createOrder(order).subscribe(() => {
       //redirect to thank you page // payment page
+      this.cartService.emptyCart();
+      this.router.navigate(['success']);
       console.log('successfuly added')
     });
   }
