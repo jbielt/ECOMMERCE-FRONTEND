@@ -1,4 +1,4 @@
-import {Category} from "@eastblue/products";
+import {Category} from "../model/category";
 
 export class Product {
   id?: string;
@@ -9,7 +9,7 @@ export class Product {
   images?: string[];
   brand?: string;
   price: number;
-  category: Category;
+  category?: Category;
   countInStock?: number;
   rating?: number;
   numReviews?: number;

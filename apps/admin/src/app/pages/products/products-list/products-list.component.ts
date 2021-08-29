@@ -14,8 +14,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   endSubscription$: Subject<any> = new Subject();
 
-
-
   constructor(private productService: ProductsService,
               private router: Router,
               private confirmationService: ConfirmationService,
@@ -33,7 +31,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.productService
       .getProducts()
       .pipe(takeUntil(this.endSubscription$))
-      .subscribe(products => {
+      .subscribe((products) => {
         this.products = products;
       })
   }
