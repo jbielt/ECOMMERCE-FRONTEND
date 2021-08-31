@@ -50,6 +50,7 @@ export class CheckoutPageComponent implements OnInit {
         quantity: item.quantity
       }
     });
+    //console.log(this.orderItems)
   }
 
   private _getCountries() {
@@ -74,7 +75,6 @@ export class CheckoutPageComponent implements OnInit {
       country: this.checkoutForm.country.value,
       phone: this.checkoutForm.phone.value,
       status: 0,
-      //totalPrice: this.checkoutForm.totalPrice.value,
       user: this.userId,
       dateOrdered: `${Date.now()}`
     };
