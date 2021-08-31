@@ -1,5 +1,4 @@
 import {OrderItem} from "./orderItem";
-import {User} from "@eastblue/users";
 
 export class Order {
   id?: string;

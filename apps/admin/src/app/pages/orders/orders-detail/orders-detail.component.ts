@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Order, OrderItem, OrdersService} from "@eastblue/orders";
+import {Order, OrdersService, ORDER_STATUS} from "@eastblue/orders";
 import {ActivatedRoute} from "@angular/router";
-import {ORDER_STATUS} from '@eastblue/orders';
 import {MessageService} from "primeng/api";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
