@@ -8,6 +8,7 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
 import {FormsModule, ReactiveFormsModule} from "@angular/forms"
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
 import { ThankYouComponent } from './pages/thankyou/thank-you/thank-you.component';
+import {AuthGuard} from "@eastblue/users";
 
 
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
+    canActivate: [AuthGuard],
     component: CheckoutPageComponent
   },
   {
@@ -55,7 +57,8 @@ const routes: Routes = [
   ],
   exports: [
     CartIconComponent
-  ]
+  ],
+  providers: []
 })
 export class OrdersModule {
   constructor(cartService: CartService) {

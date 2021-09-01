@@ -31,14 +31,14 @@ export class CheckoutPageComponent implements OnInit {
 
   private _initCheckoutForm() {
     this.checkoutFormGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.email, Validators.required]],
-      phone: ['', Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      zip: ['', Validators.required],
-      apartment: ['', Validators.required],
-      street: ['', Validators.required]
+      name: ['prova', Validators.required],
+      email: ['prova@gmail.com', [Validators.email, Validators.required]],
+      phone: ['(555) 555-4444', Validators.required],
+      city: ['blanes', Validators.required],
+      country: ['Albania', Validators.required],
+      zip: ['4654', Validators.required],
+      apartment: ['fake123', Validators.required],
+      street: ['street fake', Validators.required]
     });
   }
 

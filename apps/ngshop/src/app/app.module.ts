@@ -13,6 +13,8 @@ import {ProductsModule} from "@eastblue/products";
 import {UiModule} from "@eastblue/ui";
 import {HttpClientModule} from "@angular/common/http";
 import {OrdersModule} from "@eastblue/orders";
+import {UsersModule} from "@eastblue/users";
+
 
 import {ToastModule} from "primeng/toast";
 import { MessagesComponent } from './shared/messages/messages.component';
@@ -41,7 +43,8 @@ const routes: Routes = [
     ProductsModule,
     UiModule,
     OrdersModule,
-    ToastModule
+    ToastModule,
+    UsersModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],
