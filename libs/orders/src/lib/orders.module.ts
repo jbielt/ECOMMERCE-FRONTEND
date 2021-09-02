@@ -10,8 +10,6 @@ import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.compo
 import { ThankYouComponent } from './pages/thankyou/thank-you/thank-you.component';
 import {AuthGuard} from "@eastblue/users";
 
-
-
 import {BadgeModule} from "primeng/badge";
 import {ButtonModule} from "primeng/button";
 import {InputNumberModule} from "primeng/inputnumber";

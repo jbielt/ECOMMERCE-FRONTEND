@@ -32,8 +32,8 @@ export class CartPageComponent implements OnInit, OnDestroy {
   private _getCartDetails() {
     this.cartService.cart$.pipe(takeUntil(this.endSubscription$)).subscribe((respCart) => {
       this.cartItemsDetailed = [];
-      this.cartCount = respCart?.items!.length ?? 0;
-      respCart.items!.forEach((cartItem) => {
+      this.cartCount = respCart.items?.length ?? 0;
+      respCart.items?.forEach((cartItem) => {
         this.ordersService.getProduct(cartItem.productId!).subscribe((respProduct) => {
           this.cartItemsDetailed.push({
             product: respProduct,
