@@ -10,11 +10,9 @@
 @import "~primeng/resources/primeng.min.css";
 //grid system primeng
 @import "~primeflex/primeflex.css";
-
-@import "./base/configuration";
-
 //animate css
 @import "~animate.css/animate.css";
+@import "./base/configuration";
 
 
 //Pages
@@ -32,6 +30,7 @@
 @import './libs/products/products';
 @import "./libs/ui/ui";
 @import "./libs/orders/orders";
+@import './libs/users/users.scss';
 
 
 .container {
