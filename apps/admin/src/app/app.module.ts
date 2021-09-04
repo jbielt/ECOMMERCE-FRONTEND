@@ -38,6 +38,8 @@ import { OrdersListComponent } from './pages/orders/orders-list/orders-list.comp
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import {FieldsetModule} from 'primeng/fieldset';
 import {AppRoutingModule} from "./app-routing.module";
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
 
 
 const UX_MODULE = [
@@ -80,7 +82,9 @@ const UX_MODULE = [
     ReactiveFormsModule,
     UX_MODULE,
     UsersModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([])
   ],
   providers: [
     CategoriesService,
