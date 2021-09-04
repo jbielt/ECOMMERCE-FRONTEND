@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import {User} from "../..";
+import {User, UsersFacade} from "../..";
 import {Observable} from "rxjs";
 import {environment} from "@env/environment";
 import * as countriesLib from 'i18n-iso-countries';
@@ -14,7 +14,8 @@ export class UsersService {
 
   apiURLUsers = environment.apiURL + 'users';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private usersFacade: UsersFacade) {
     countriesLib.registerLocale(require('i18n-iso-countries/langs/en.json'));
   }
 
@@ -56,6 +57,6 @@ export class UsersService {
   }
 
   initAppSession() {
-
+    this.usersFacade.buildUserSession();
   }
 }
