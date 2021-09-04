@@ -14,6 +14,8 @@ import {UiModule} from "@eastblue/ui";
 import {HttpClientModule} from "@angular/common/http";
 import {OrdersModule} from "@eastblue/orders";
 import {UsersModule} from "@eastblue/users";
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
 
 
 import {ToastModule} from "primeng/toast";
@@ -44,7 +46,9 @@ const routes: Routes = [
     UiModule,
     OrdersModule,
     ToastModule,
-    UsersModule
+    UsersModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([])
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],
