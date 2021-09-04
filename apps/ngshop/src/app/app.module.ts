@@ -11,9 +11,9 @@ import {AccordionModule} from 'primeng/accordion';
 import { NavComponent } from './shared/nav/nav.component';
 import {ProductsModule} from "@eastblue/products";
 import {UiModule} from "@eastblue/ui";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {OrdersModule} from "@eastblue/orders";
-import {UsersModule} from "@eastblue/users";
+import {JwtInterceptor, UsersModule} from "@eastblue/users";
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 
@@ -50,7 +50,12 @@ const routes: Routes = [
     StoreModule.forRoot({}),
     EffectsModule.forRoot([])
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

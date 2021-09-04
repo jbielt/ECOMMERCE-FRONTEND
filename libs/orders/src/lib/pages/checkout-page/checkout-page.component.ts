@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {User, UsersService} from '@eastblue/users';
 import { OrderItem } from '../../models/orderItem';
 import {Cart, CartService, Order, OrdersService, ORDER_STATUS} from "@eastblue/orders";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'orders-checkout-page',
@@ -26,20 +27,39 @@ export class CheckoutPageComponent implements OnInit {
   ngOnInit(): void {
     this._initCheckoutForm();
     this._getCartItems();
+    this._autoFillUserData();
     this._getCountries();
   }
 
   private _initCheckoutForm() {
     this.checkoutFormGroup = this.formBuilder.group({
-      name: ['prova', Validators.required],
-      email: ['prova@gmail.com', [Validators.email, Validators.required]],
-      phone: ['(555) 555-4444', Validators.required],
-      city: ['blanes', Validators.required],
-      country: ['Albania', Validators.required],
-      zip: ['4654', Validators.required],
-      apartment: ['fake123', Validators.required],
-      street: ['street fake', Validators.required]
+      name: ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
+      phone: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      zip: ['', Validators.required],
+      apartment: ['', Validators.required],
+      street: ['', Validators.required]
     });
+  }
+
+  private _autoFillUserData() {
+    this.usersService
+      .observeCurrentUser()
+      .pipe(take(1))
+      .subscribe((user) => {
+        if(user) {
+          this.checkoutForm.name.setValue(user.name);
+          this.checkoutForm.email.setValue(user.email);
+          this.checkoutForm.phone.setValue(user.phone);
+          this.checkoutForm.street.setValue(user.street);
+          this.checkoutForm.apartment.setValue(user.apartment);
+          this.checkoutForm.zip.setValue(user.zip);
+          this.checkoutForm.city.setValue(user.city);
+          this.checkoutForm.country.setValue(user.country);
+        }
+      });
   }
 
   private _getCartItems() {
