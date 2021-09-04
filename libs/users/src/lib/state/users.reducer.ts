@@ -23,7 +23,17 @@ export const initialUsersState: UsersState = {
 
 const usersReducer = createReducer(
   initialUsersState,
-  on(UsersActions.buildUserSession, (state) => ({...state}))
+  on(UsersActions.buildUserSession, (state) => ({...state})),
+  on(UsersActions.buildUserSessionSuccess, (state, action) => ({
+    ...state,
+    user: action.user,
+    isAuthenticated: true
+  })),
+  on(UsersActions.buildUserSessionFailed, (state, action) => ({
+    ...state,
+    user: null,
+    isAuthenticated: false
+  }))
 )
 
 
