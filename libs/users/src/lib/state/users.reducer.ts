@@ -17,7 +17,7 @@ export interface UsersPartialState {
 }
 
 export const initialUsersState: UsersState = {
-  user: null,
+  user: null as any,
   isAuthenticated: false
 }
 
@@ -31,7 +31,7 @@ const usersReducer = createReducer(
   })),
   on(UsersActions.buildUserSessionFailed, (state, action) => ({
     ...state,
-    user: null,
+    user: null as any,
     isAuthenticated: false
   }))
 )
