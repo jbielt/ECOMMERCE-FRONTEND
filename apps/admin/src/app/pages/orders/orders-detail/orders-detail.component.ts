@@ -13,7 +13,7 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
 
   order: Order;
   orderStatuses: any[] = [];
-  selectedStatus: any
+  selectedStatus: any;
   endSubscription$: Subject<any> = new Subject();
 
 
@@ -72,6 +72,7 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
           .subscribe((order) => {
             this.order = order;
             this.selectedStatus = order.status;
+            console.log(this.order);
           })
       }
     });

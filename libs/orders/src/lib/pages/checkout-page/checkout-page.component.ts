@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {User, UsersService} from '@eastblue/users';
-import { OrderItem } from '../../models/orderItem';
+import {UsersService} from '@eastblue/users';
+import { OrderItem } from '@eastblue/orders';
 import {Cart, CartService, Order, OrdersService, ORDER_STATUS} from "@eastblue/orders";
-import {take, takeUntil} from "rxjs/operators";
+import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 
 @Component({
