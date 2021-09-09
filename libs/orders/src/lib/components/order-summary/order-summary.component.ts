@@ -48,7 +48,10 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
   }
 
   navigateToCheckOut() {
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['/checkout'])
+      .then(() => {
+        window.location.reload();
+      });
   }
 }
 
