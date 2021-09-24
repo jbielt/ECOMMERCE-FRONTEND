@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import {Order} from "../..";
+import {Order, OrderItem} from "../..";
 import {Observable} from "rxjs";
 import {environment} from "@env/environment";
 import {map} from "rxjs/operators";
@@ -48,5 +48,9 @@ export class OrdersService {
 
   getProduct(productId: string): Observable<any> {
     return this.http.get<any>(`${this.apiURLProducts}/${productId}`)
+  }
+
+  createCheckoutSession(orderItem: OrderItem[]) {
+    return this.http.post(`${this.apiURLProducts}/create-checkout-session`, orderItem);
   }
 }
