@@ -3,7 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import {Order, OrderItem} from "../..";
 import {Observable} from "rxjs";
 import {environment} from "@env/environment";
-import {map} from "rxjs/operators";
+import {map, switchMap} from "rxjs/operators";
+import {StripeService} from "ngx-stripe";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class OrdersService {
   apiURLProducts = environment.apiURL + 'products';
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private stripeService: StripeService) {
   }
 
   getOrders(): Observable<Order[]> {
@@ -51,6 +53,9 @@ export class OrdersService {
   }
 
   createCheckoutSession(orderItem: OrderItem[]) {
-    return this.http.post(`${this.apiURLOrders}/create-checkout-session`, orderItem);
+    return this.http.post(`${this.apiURLOrders}/create-checkout-session`, orderItem).pipe(
+      switchMap((session: any) => {
+      return this.stripeService.redirectToCheckout({sessionId: session.id});
+    }));
   }
 }

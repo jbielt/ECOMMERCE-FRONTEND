@@ -6,6 +6,7 @@ import { OrderItem } from '@eastblue/orders';
 import {Cart, CartService, Order, OrdersService, ORDER_STATUS} from "@eastblue/orders";
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {StripeService} from "ngx-stripe";
 
 @Component({
   selector: 'orders-checkout-page',
@@ -94,9 +95,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.orderService.createCheckoutSession(this.orderItems).subscribe(session => {
-      console.log(session)
-    })
+    this.orderService.createCheckoutSession(this.orderItems).subscribe((error) => {
+      if(error) {
+        console.log("error in redirect to payment");
+      }
+    });
     /*
     const order: Order = {
       orderItems: this.orderItems,

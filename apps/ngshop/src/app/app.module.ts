@@ -21,6 +21,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {ToastModule} from "primeng/toast";
 import { MessagesComponent } from './shared/messages/messages.component';
 import {MessageService} from "primeng/api";
+import {NgxStripeModule} from "ngx-stripe";
 
 
 const routes: Routes = [
@@ -48,7 +49,8 @@ const routes: Routes = [
     ToastModule,
     UsersModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    NgxStripeModule.forRoot('pk_test_51JcNIUEsKvwIzSQFmQbE2KsamtCQn6TStXu1AkViqCQ0DqrP4kw9FIR9eHWTeV7KwafAHbqEugd3dasnEsarpaer00Ly2QEqT4')
   ],
   providers: [
     MessageService,
