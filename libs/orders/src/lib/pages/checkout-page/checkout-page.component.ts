@@ -93,6 +93,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     if (this.checkoutFormGroup.invalid) {
       return;
     }
+
+    this.orderService.createCheckoutSession(this.orderItems).subscribe(session => {
+      console.log(session)
+    })
+    /*
     const order: Order = {
       orderItems: this.orderItems,
       shippingAddress1: this.checkoutForm.street.value,
@@ -109,7 +114,12 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       //redirect to thank you page // payment page
       this.cartService.emptyCart();
       this.router.navigate(['/success']);
-    });
+    },
+    () => {
+      //display some message to user
+      }
+    );
+     */
   }
 
   get checkoutForm() {

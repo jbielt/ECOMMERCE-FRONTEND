@@ -51,6 +51,6 @@ export class OrdersService {
   }
 
   createCheckoutSession(orderItem: OrderItem[]) {
-    return this.http.post(`${this.apiURLProducts}/create-checkout-session`, orderItem);
+    return this.http.post(`${this.apiURLOrders}/create-checkout-session`, orderItem);
   }
 }
