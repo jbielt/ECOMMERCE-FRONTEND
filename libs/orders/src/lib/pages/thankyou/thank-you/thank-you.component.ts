@@ -11,4 +11,16 @@ export class ThankYouComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /*
+    this.orderService.createOrder(order).subscribe(() => {
+      //redirect to thank you page // payment page
+      this.cartService.emptyCart();
+      this.router.navigate(['/success']);
+    },
+    () => {
+      //display some message to user
+      }
+    );
+     */
+
 }

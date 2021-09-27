@@ -95,12 +95,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.orderService.createCheckoutSession(this.orderItems).subscribe((error) => {
-      if(error) {
-        console.log("error in redirect to payment");
-      }
-    });
-    /*
     const order: Order = {
       orderItems: this.orderItems,
       shippingAddress1: this.checkoutForm.street.value,
@@ -113,16 +107,14 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       user: this.userId,
       dateOrdered: `${Date.now()}`
     };
-    this.orderService.createOrder(order).subscribe(() => {
-      //redirect to thank you page // payment page
-      this.cartService.emptyCart();
-      this.router.navigate(['/success']);
-    },
-    () => {
-      //display some message to user
+
+    this.orderService.cacheOrderData(order);
+
+    this.orderService.createCheckoutSession(this.orderItems).subscribe((error) => {
+      if(error) {
+        console.log("error in redirect to payment");
       }
-    );
-     */
+    });
   }
 
   get checkoutForm() {
