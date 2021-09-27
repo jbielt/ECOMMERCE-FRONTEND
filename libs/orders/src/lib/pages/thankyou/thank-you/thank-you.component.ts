@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CartService, OrdersService} from "@eastblue/orders";
 
 @Component({
   selector: 'orders-thank-you',
@@ -6,21 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ThankYouComponent implements OnInit {
 
-  constructor() { }
+  constructor(private orderService: OrdersService,
+              private cartService: CartService) { }
 
   ngOnInit(): void {
-  }
-
-  /*
-    this.orderService.createOrder(order).subscribe(() => {
-      //redirect to thank you page // payment page
+    const orderData = this.orderService.getCacheOrderData();
+    this.orderService.createOrder(orderData).subscribe(() => {
       this.cartService.emptyCart();
-      this.router.navigate(['/success']);
-    },
-    () => {
-      //display some message to user
-      }
-    );
-     */
+      this.orderService.removeCacheOrderData();
+    })
+  }
 
 }

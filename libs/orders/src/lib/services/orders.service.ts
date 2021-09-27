@@ -62,4 +62,12 @@ export class OrdersService {
   cacheOrderData(order: Order) {
     localStorage.setItem('orderData', JSON.stringify(order));
   }
+
+  getCacheOrderData(): Order {
+    return JSON.parse(<string>localStorage.getItem('orderData'));
+  }
+
+  removeCacheOrderData() {
+    localStorage.removeItem('orderData');
+  }
 }
