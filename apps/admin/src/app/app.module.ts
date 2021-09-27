@@ -40,6 +40,7 @@ import {FieldsetModule} from 'primeng/fieldset';
 import {AppRoutingModule} from "./app-routing.module";
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
+import {NgxStripeModule} from "ngx-stripe";
 
 
 const UX_MODULE = [
@@ -84,7 +85,8 @@ const UX_MODULE = [
     UsersModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    NgxStripeModule.forRoot('pk_test_51JcNIUEsKvwIzSQFmQbE2KsamtCQn6TStXu1AkViqCQ0DqrP4kw9FIR9eHWTeV7KwafAHbqEugd3dasnEsarpaer00Ly2QEqT4')
   ],
   providers: [
     CategoriesService,
